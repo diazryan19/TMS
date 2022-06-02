@@ -46,6 +46,7 @@ var table =$('table.employeeTable').DataTable({
             }); 
     });
 
+    
     $(document).on('click', '#btnApprovingGroup', function(){
         $('table.approvinggroupTable').DataTable({
             ajax: {
