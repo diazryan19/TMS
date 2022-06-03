@@ -10,7 +10,7 @@ use App\Http\Controllers\LeaveController;
 use App\Http\Controllers\HolidayController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
-use Validator,Redirect,Response;
+// use Validator,Redirect,Response;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,17 +23,21 @@ use Validator,Redirect,Response;
 |
 */
 
-// Route::get('/login', function () {
-//     return view('auth.register');
+// Route:: get ('/', function () {
+//     return 'Welcome to index';
+//  });
+
+// Route::get('/', function () {
+//     return view('Welcome to index');
 // });
 
 // Route::get('/', function () {
 //     return view('homeview');
 // });
+
 Route::get('/', [HomeController::class ,'index']);
 Route::get('/dtr', [DTRController::class ,'index']);
 Route::get('/branch', [BranchController::class ,'index']);
-
 
 Route::get('/user', [UserController::class ,'index']);
 Route::any('/user/save', [UserController::class ,'saveuser']);

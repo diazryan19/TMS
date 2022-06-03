@@ -44,8 +44,8 @@
           <div class="form-group my-4">
             <label class="control-label col-sm-4" for="province">Province:</label>
             <div class="col-sm-8">
-              <select class="form-control" id="province" style="margin-top:-8px !important; color: Gray;" required>
-                <option value="" selected disabled style="color: Gray;">Select Province</option>
+              <select class="chosen-select" id="province" style="margin-top:-8px !important; color: Gray;" data-placeholder="Select Province" multiple required>
+                {{-- <option value="" selected disabled style="color: Gray;">Select Province</option> --}}
                 @foreach ($refprovinces as $refprovince) 
                 <option value="{{$refprovince->provCode}}">{{$refprovince->provDesc}}</option>
               @endforeach
