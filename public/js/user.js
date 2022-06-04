@@ -1,5 +1,6 @@
+var table;
 $(document).ready( function () {
-    $('table.userTable').DataTable({
+ table = $('table.userTable').DataTable({
         ajax: {
             url: '/user/data',
         },
@@ -13,7 +14,8 @@ $(document).ready( function () {
             { data: 'id'},
             { data: 'name' },
             { data: 'email'},
-            { data: 'userlevel'}
+            { data: 'userlevel'},
+            { data: 'status'}
         ],
         order:[[1, 'asc']],
     });
@@ -36,6 +38,16 @@ $(document).on('click', '#btnAddUser', function(){
     });
     $('#newuser').modal('show');
     $('.modal-body').html();
+    $('#userTitle').html('CREATE NEW USER');
+    $('.hidepass').show();
+
+    $('#btnDelete').hide();
+    $('#btnSave').val('Save');
+    $('#fullname').val('');
+    $('#password').val('');
+    $('#email').val('');
+    $('#userlevel').val('');
+    $('#status').val('');
 });
 
 $(document).on('click', '#userTable tbody tr', function(){
@@ -56,6 +68,7 @@ $(document).on('click', '#userTable tbody tr', function(){
     $('#fullname').val(data.name);
     $('#email').val(data.email);
     $('#userlevel').val(data.userlevel);
+    $('#status').val(data.status);
     // var table = $('#userTable').DataTable();
     // var data = table.row(this).data();
     // $('#userlevel').val(data.);
@@ -97,7 +110,7 @@ $(document).on('click', '#btnDelete', function(){
 
 $(document).on('click', '.closeModal', function(){
     $('#newuser').modal('hide');
-    location.reload();
+    // location.reload();
 });
 
 $(document).on('click', '#btnSave', function(){
@@ -106,6 +119,7 @@ $(document).on('click', '#btnSave', function(){
     var email = $.trim($('#email').val().toLowerCase());
     var password = $('#password').val();
     var userlevel = $('#userlevel').val();
+    var status = $('#status').val();
     var btnSave = $('#btnSave').val();
     
     if(btnSave == 'Save'){
@@ -128,7 +142,8 @@ $(document).on('click', '#btnSave', function(){
                         id: id,
                         fullname: fullname,
                         email: email,
-                        userlevel: userlevel
+                        userlevel: userlevel,
+                        status: status
                     },
                     success: function(result){
                         // alert(result);
@@ -151,6 +166,7 @@ $(document).on('click', '#btnSave', function(){
                             })
                             .then((willDelete) => {
                                 if(willDelete){
+                                    $('.closeModal').click();
                                     $.ajax({
                                         url: "/user/save",
                                         type: "POST",
@@ -162,19 +178,23 @@ $(document).on('click', '#btnSave', function(){
                                                 fullname: fullname,
                                                 email: email,
                                                 password: password,
-                                                userlevel: userlevel
-                                    
+                                                userlevel: userlevel,
+                                                status: status
                                         },
                                         success: function(result){
                                             if (result == "true"){
-                                                $('#newuser').hide();
+                                                // $('#newuser').hide();
+                                                // $('#newuser').modal('dispose');
                                                 swal('SAVE SUCCESS','New user saved successfully!','success');
-                                                setTimeout(function(){window.location.href="/user"}, 2000);
+                                                // setTimeout(function(){window.location.href="/user"}, 2000);
+                                                table.ajax.reload(null, false);
                                             }
                                             else{
-                                                $('#newuser').hide();
+                                                // $('#newuser').hide();
+                                                // $('#newuser').modal('dispose');
                                                 swal('SAVE FAILED','New user save failed!','error');
-                                                setTimeout(function(){window.location.href="/user"}, 2000);
+                                                // setTimeout(function(){window.location.href="/user"}, 2000);
+                                                table.ajax.reload(null, false);
                                             }
                         
                                         },
@@ -273,7 +293,8 @@ $(document).on('click', '#btnSave', function(){
                         id: id,
                         fullname: fullname,
                         email: email,
-                        userlevel: userlevel
+                        userlevel: userlevel,
+                        status: status
                     },
                     success: function(result){
                         // alert(result);
@@ -301,6 +322,7 @@ $(document).on('click', '#btnSave', function(){
                             })
                             .then((willDelete) => {
                                 if(willDelete){
+                                  $('.closeModal').click();
                                     $.ajax({
                                         url: "/user/update",
                                         type: "POST",
@@ -312,19 +334,24 @@ $(document).on('click', '#btnSave', function(){
                                             id: id,
                                             fullname: fullname,
                                             email: email,
-                                            userlevel: userlevel
-                                    
+                                            userlevel: userlevel,
+                                            status: status
                                         },
                                         success: function(result){
                                             if (result == "true"){
-                                                $('#newuser').hide();
+                                                // $('#newuser').modal('hide');
+                                                // $('#newuser').modal('dispose');
                                                 swal('UPDATE SUCCESS','User updated successfully!','success');
-                                                setTimeout(function(){window.location.href="/user"}, 2000);
+                                                // setTimeout(function(){window.location.href="/user"}, 2000);
+                                                table.ajax.reload(null, false);
                                             }
                                             else{
-                                                $('#newuser').hide();
+                                                // $('#newuser').hide();
+                                                // $('#newuser').modal('hide');
+                                                // $('#newuser').modal('dispose');
                                                 swal('UPDATE FAILED','User update failed!','error');
-                                                setTimeout(function(){window.location.href="/user"}, 2000);
+                                                // setTimeout(function(){window.location.href="/user"}, 2000);
+                                                table.ajax.reload(null, false);
                                             }
                         
                                         },

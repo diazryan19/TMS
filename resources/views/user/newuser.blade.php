@@ -56,6 +56,19 @@
               </select>
             </div>
           </div>
+          <div class="form-group my-4">
+            <span class="col-sm-12">&nbsp;</span>
+          </div>
+          <div class="form-group my-4">
+            <label class="control-label col-sm-3" for="status">Status:</label>
+            <div class="col-sm-9">
+              <select class="form-control" id="status" style="margin-top:-8px !important; color: Gray;" required>
+                <option value="" selected disabled style="color: Gray;">Select status</option>
+                <option value="Active" style="color: Black;">Active</option>
+                <option value="Inactive" style="color: Black;">Inactive</option>
+              </select>
+            </div>
+          </div>
           </form>
         </div>
         <div class="modal-footer">

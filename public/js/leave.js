@@ -38,7 +38,8 @@ $(document).ready( function () {
             { data: 'from_month', visible: false},
             { data: 'to_month', visible: false}
         ],
-        order:[[2, 'asc']],
+        // order:[[2, 'asc']],
+        order:[],
     });
 } );
 $(document).on('click', '.closeModal', function(){

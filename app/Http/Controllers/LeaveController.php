@@ -36,8 +36,8 @@ class LeaveController extends Controller
     public function leaveTable(){
         // $list = Holiday::select('id','name','type','remarks','date')->get();
         // return DataTables::of($list)->make(true);
-
-        $list = Leave::get();
+        // $list = Leave::get();
+        $list = Leave::query()->select()->orderBy('type','ASC')->get();
         return DataTables::of($list)->make(true);
     }
 

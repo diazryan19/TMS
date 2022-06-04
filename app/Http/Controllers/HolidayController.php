@@ -33,7 +33,8 @@ class HolidayController extends Controller
         {
             return redirect('/');
         }
-        $holiday = HolidayType::query()->select()->get()->sortBy('name');
+        // $holiday = HolidayType::query()->select()->orderBy->get()->sortBy('name');
+        $holiday = HolidayType::query()->select()->orderBy('name','ASC')->get();
         return view('holiday.holiday', compact('holiday'));
         // return view('holiday.holiday');
     }

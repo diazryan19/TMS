@@ -43,6 +43,7 @@ class UserController extends Controller
             $users->email = $request->email;
             $users->password = Hash::make($request->password);
             $users->assignRole($request->userlevel);
+            $users->status =$request->status;
             if($users->save()){
                 $result = "true";
             }
@@ -81,6 +82,10 @@ class UserController extends Controller
             ->where('id',$request->id)
             ->first()
             ->name;
+        $currentstatus = User::query()->select()
+            ->where('id',$request->id)
+            ->first()
+            ->status;
            
         $currentuserlevel = User::select('roles.name AS userlevel')
             ->where('users.id',$request->id)
@@ -89,7 +94,8 @@ class UserController extends Controller
             ->first()
             ->userlevel;
 
-        if($currentemail == $request->email && $currentname == $request->fullname && $currentuserlevel == $request->userlevel){
+        if($currentemail == $request->email && $currentname == $request->fullname 
+        && $currentuserlevel  == $request->userlevel && $currentstatus  == $request->status){
                 // $email = 0;
                 $result = "nochanges";
             }
@@ -126,6 +132,7 @@ class UserController extends Controller
         $users->name = $request->fullname;
         $users->email = $request->email;
         $users->syncRoles($request->userlevel);
+        $users->status =$request->status;
         if($users->save()){
             $result= "true";
         }
@@ -149,11 +156,12 @@ class UserController extends Controller
     }
 
 
-    public function userTable(){
+    public function userTable(Request $request){
         // $list = User::select('id','name','email')->get();
         // return DataTables::of($list)->make(true);
 
-        $list = User::select('users.id AS id', 'users.name AS name', 'users.email AS email', 'roles.name AS userlevel')
+        $list = User::select('users.id AS id', 'users.name AS name', 'users.email AS email', 'users.status AS status', 'roles.name AS userlevel')
+        // ->where('users.name',$request->name)
         ->join('model_has_roles', 'model_id', '=', 'users.id')
         ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
         ->get();
